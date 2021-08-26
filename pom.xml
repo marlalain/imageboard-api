@@ -14,7 +14,9 @@
 	<name>imageboard</name>
 	<description>Imageboard backend</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>9</java.version>
+		<maven.compiler.source>9</maven.compiler.source>
+		<maven.compiler.target>9</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
