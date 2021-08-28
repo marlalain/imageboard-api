@@ -1,12 +1,13 @@
 package com.pauloelienay.imageboard.model;
 
-import com.pauloelienay.imageboard.model.dto.CreateUserDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,9 +15,8 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "users")
-public class User {
-    @SequenceGenerator(name = "seq_users")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_users")
+public class User implements Serializable {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
     @Id
     private Long id;
@@ -29,4 +29,7 @@ public class User {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Post> posts;
 }
