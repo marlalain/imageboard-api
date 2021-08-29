@@ -1,15 +1,17 @@
 package com.pauloelienay.imageboard.controller.v1;
 
 import com.pauloelienay.imageboard.model.User;
-import com.pauloelienay.imageboard.model.dto.CreateUserDto;
 import com.pauloelienay.imageboard.model.dto.GetUserDto;
 import com.pauloelienay.imageboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -28,8 +30,10 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<CreateUserDto> create(@RequestBody User user) {
-        return new ResponseEntity<>(service.createNew(user), HttpStatus.CREATED);
+    public ResponseEntity<User> create(@RequestBody User user) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(linkTo(UserController.class).slash(service.createNew(user).getId()).toUri());
+        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

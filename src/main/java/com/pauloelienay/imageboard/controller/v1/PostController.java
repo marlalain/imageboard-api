@@ -8,9 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -32,7 +35,9 @@ public class PostController {
 
     @PostMapping
     public ResponseEntity<Post> createPost(@RequestBody Post post) {
-        return new ResponseEntity<>(service.createPost(post), HttpStatus.CREATED);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(linkTo(PostController.class).slash(service.createPost(post).getId()).toUri());
+        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

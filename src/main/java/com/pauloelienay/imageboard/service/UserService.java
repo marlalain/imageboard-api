@@ -2,7 +2,6 @@ package com.pauloelienay.imageboard.service;
 
 import com.pauloelienay.imageboard.exception.GenericException;
 import com.pauloelienay.imageboard.model.User;
-import com.pauloelienay.imageboard.model.dto.CreateUserDto;
 import com.pauloelienay.imageboard.model.dto.GetUserDto;
 import com.pauloelienay.imageboard.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +25,8 @@ public class UserService {
                 .orElseThrow(() -> new GenericException("Could not find user.")));
     }
 
-    public CreateUserDto createNew(User user) {
-        return CreateUserDto.convertToDto(repository.save(user));
+    public User createNew(User user) {
+        return repository.save(user);
     }
 
     public void deleteById(long id) {

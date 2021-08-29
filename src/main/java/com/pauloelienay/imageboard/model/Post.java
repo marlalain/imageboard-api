@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Table(name = "posts")
 public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
     @Id
     private long id;
 
