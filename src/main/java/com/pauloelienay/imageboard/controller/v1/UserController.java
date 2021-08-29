@@ -4,6 +4,7 @@ import com.pauloelienay.imageboard.model.User;
 import com.pauloelienay.imageboard.model.dto.GetUserDto;
 import com.pauloelienay.imageboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -25,8 +27,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetUserDto> findOne(@PathVariable long id) {
-        return new ResponseEntity<>(service.findOne(id), HttpStatus.OK);
+    public ResponseEntity<EntityModel<GetUserDto>> findOne(@PathVariable long id) {
+        return new ResponseEntity<>(addLinksById(service.findOneFull(id).getId()), HttpStatus.OK);
     }
 
     @PostMapping()
@@ -43,7 +45,19 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> update(@RequestBody User user, @PathVariable long id) {
-        return new ResponseEntity<>(service.update(id, user), HttpStatus.NO_CONTENT);
+    public ResponseEntity<EntityModel<GetUserDto>> update(@RequestBody User user, @PathVariable long id) {
+        return new ResponseEntity<>(addLinks(service.update(id, user)), HttpStatus.OK);
+    }
+
+    EntityModel<GetUserDto> addLinks(User user) {
+        return addLinksById(user.getId());
+    }
+
+    EntityModel<GetUserDto> addLinksById(Long id) {
+        EntityModel<GetUserDto> model = EntityModel.of(service.findOne(id));
+        model.add(linkTo(methodOn(this.getClass()).findOne(id)).withSelfRel());
+        model.add(linkTo(methodOn(this.getClass()).update(null, id)).withRel("update").withType("PATCH"));
+        model.add(linkTo(methodOn(this.getClass()).findAll()).withRel("users"));
+        return model;
     }
 }

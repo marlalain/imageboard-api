@@ -25,6 +25,11 @@ public class UserService {
                 .orElseThrow(() -> new GenericException("Could not find user.")));
     }
 
+    public User findOneFull(long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new GenericException("Could not find user."));
+    }
+
     public User createNew(User user) {
         return repository.save(user);
     }
