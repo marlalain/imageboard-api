@@ -1,6 +1,7 @@
 package com.pauloelienay.imageboard.service;
 
 import com.pauloelienay.imageboard.exception.GenericException;
+import com.pauloelienay.imageboard.exception.ResourceNotFoundException;
 import com.pauloelienay.imageboard.model.User;
 import com.pauloelienay.imageboard.model.dto.GetUserDto;
 import com.pauloelienay.imageboard.repository.UserRepository;
@@ -22,12 +23,12 @@ public class UserService {
 
     public GetUserDto findOne(long id) {
         return GetUserDto.convertToDto(repository.findById(id)
-                .orElseThrow(() -> new GenericException("Could not find user.")));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found.")));
     }
 
     public User findOneFull(long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new GenericException("Could not find user."));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found."));
     }
 
     public User createNew(User user) {

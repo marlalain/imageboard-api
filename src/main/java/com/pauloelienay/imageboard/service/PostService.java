@@ -1,6 +1,7 @@
 package com.pauloelienay.imageboard.service;
 
 import com.pauloelienay.imageboard.exception.GenericException;
+import com.pauloelienay.imageboard.exception.ResourceNotFoundException;
 import com.pauloelienay.imageboard.model.Post;
 import com.pauloelienay.imageboard.model.dto.GetPostDto;
 import com.pauloelienay.imageboard.repository.PostRepository;
@@ -21,7 +22,7 @@ public class PostService {
     public GetPostDto getPostById(long id) {
         return GetPostDto.convertToDto(repository
                 .findById(id)
-                .orElseThrow(() -> new GenericException("Post not found.")));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found.")));
     }
 
     public Post createPost(Post post) {
