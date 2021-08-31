@@ -4,19 +4,16 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.pauloelienay.imageboard.model.Post;
 import com.pauloelienay.imageboard.model.User;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.RepresentationModel;
 
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
 @Builder
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GetUserDto extends RepresentationModel<GetUserDto> {
+public class GetUserDto {
     private String name;
     private String email;
     private Set<Post> posts;

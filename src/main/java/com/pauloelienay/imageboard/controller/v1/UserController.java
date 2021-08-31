@@ -4,6 +4,7 @@ import com.pauloelienay.imageboard.model.User;
 import com.pauloelienay.imageboard.model.dto.GetUserDto;
 import com.pauloelienay.imageboard.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
     private final UserService service;
 

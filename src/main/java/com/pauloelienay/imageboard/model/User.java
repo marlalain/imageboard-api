@@ -1,9 +1,7 @@
 package com.pauloelienay.imageboard.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,10 +10,13 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
+@ToString
 @Entity
 @NoArgsConstructor
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements Serializable {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
     @Id
@@ -31,5 +32,6 @@ public class User implements Serializable {
     private String password;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<Post> posts;
 }
