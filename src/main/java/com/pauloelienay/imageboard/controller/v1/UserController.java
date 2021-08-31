@@ -59,6 +59,7 @@ public class UserController {
         EntityModel<GetUserDto> model = EntityModel.of(service.findOne(id));
         model.add(linkTo(methodOn(this.getClass()).findOne(id)).withSelfRel());
         model.add(linkTo(methodOn(this.getClass()).update(null, id)).withRel("update").withType("PATCH"));
+        model.add(linkTo(methodOn(this.getClass()).delete(id)).withRel("delete").withType("DELETE"));
         model.add(linkTo(methodOn(this.getClass()).findAll()).withRel("users"));
         return model;
     }
