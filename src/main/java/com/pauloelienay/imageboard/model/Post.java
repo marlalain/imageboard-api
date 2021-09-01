@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +13,6 @@ import java.util.Set;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@ToString
 @Entity
 @Table(name = "posts")
 @JsonInclude(JsonInclude.Include.NON_NULL)

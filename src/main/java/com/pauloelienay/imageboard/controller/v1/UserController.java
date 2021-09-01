@@ -30,7 +30,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<EntityModel<GetUserDto>> findOne(@PathVariable long id) {
-        return new ResponseEntity<>(addLinksById(service.findOneFull(id).getId()), HttpStatus.OK);
+        return new ResponseEntity<>(addLinksById(id), HttpStatus.OK);
     }
 
     @PostMapping()

@@ -19,10 +19,10 @@ public class PostService {
         return repository.findAll(pageable);
     }
 
-    public GetPostDto getPostById(long id) {
-        return GetPostDto.convertToDto(repository
+    public Post getPostById(long id) {
+        return repository
                 .findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Post not found.")));
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found."));
     }
 
     public Post createPost(Post post) {
